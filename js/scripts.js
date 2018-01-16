@@ -28,6 +28,7 @@ jQuery(document).ready(function($) {
 
         $.ajax({
             url: url,
+            crossDomain: true,
             type: 'POST',
             dataType: 'JSON',
             data: data,
