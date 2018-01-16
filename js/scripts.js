@@ -1,5 +1,7 @@
 "use strict";
 
+jQuery.support.cors = true;
+
 jQuery(document).ready(function($) {
     var url = Cookies.get('make_a_post_url'),
         data = Cookies.get('make_a_post_data');
@@ -26,12 +28,18 @@ jQuery(document).ready(function($) {
         Cookies.set('make_a_post_url', url);
         Cookies.set('make_a_post_data', data);
 
+        data = data.replace( /(\r\n|\n|\r)/gm, '' );
+        data = JSON.parse(data);
+
         $.ajax({
             url: url,
-            crossDomain: true,
+            data: data,
             type: 'POST',
             dataType: 'JSON',
-            data: data,
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
         })
         .always(function(response) {
             $('#api_post').removeClass('submiting');
